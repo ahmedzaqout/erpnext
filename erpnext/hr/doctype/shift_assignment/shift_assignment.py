@@ -35,6 +35,7 @@ class ShiftAssignment(Document):
 				if date_overlap['name']:
 					self.throw_overlap_error(date_overlap)
 
+					
 	def throw_overlap_error(self, d):
 		msg = _("Employee {0} has already applied for {1} on {2} : ").format(self.employee,
 			d['shift_type'], formatdate(d['date'])) \
