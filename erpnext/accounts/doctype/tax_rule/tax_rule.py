@@ -144,7 +144,7 @@ def get_tax_template(posting_date, args):
 	conditions = ["""(from_date is null or from_date <= '{0}')
 		and (to_date is null or to_date >= '{0}')""".format(posting_date)]
 
-	for key, value in iteritems(args):
+	for key, value in args.iteritems():
 		if key=="use_for_shopping_cart":
 			conditions.append("use_for_shopping_cart = {0}".format(1 if value else 0))
 		if key == 'customer_group':
@@ -165,10 +165,7 @@ def get_tax_template(posting_date, args):
 		for key in args:
 			if rule.get(key): rule.no_of_keys_matched += 1
 
-	rule = sorted(tax_rule,
-		key = functools.cmp_to_key(lambda b, a:
-		cmp(a.no_of_keys_matched, b.no_of_keys_matched) or
-		cmp(a.priority, b.priority)))[0]
+	rule = sorted(tax_rule, lambda b, a: cmp(a.no_of_keys_matched, b.no_of_keys_matched) or cmp(a.priority, b.priority))[0]
 
 	tax_template = rule.sales_tax_template or rule.purchase_tax_template
 	doctype = "{0} Taxes and Charges Template".format(rule.tax_type)
